@@ -1,0 +1,71 @@
+div.SubjectButton
+{
+    background: url(./subject_button.png) 100% 0 no-repeat;
+}
+.icon-32-de {
+    background-image: url(./icon-32-de.png);
+}
+.icon-32-en {
+    background-image: url(./icon-32-en.png);
+}
+.icon-32-insert {
+    background-image: url(./icon-32-insert.png);
+}
+.icon-48-subjects
+{
+    background-image: url(./icon-48-subjects.png);
+}
+.border_line
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px solid;
+    border-color: #CCCCCC;
+}
+
+#selectable .ui-selecting 
+{ 
+    background: #FECA40; 
+}
+
+#selectable .ui-selected 
+{ 
+    background: #F39814; 
+    color: white; 
+}
+
+#selectable 
+{ 
+    list-style-type: none; 
+    margin-top: 10px;
+    margin-left: 180px;
+    margin-right: auto;
+    width: 60%; 
+}
+
+#selectable li 
+{ 
+    margin: 3px; 
+    padding: 0.4em; 
+    font-size: 1.4em; 
+    height: 36px; 
+}
+
+#menu_subjects
+{
+   margin-top: 10px; 
+}
+
+#menu_submit_button
+{
+    border: 2px solid;
+    border-color: #CCCCCC;
+    text-align: center;
+    margin: 10px; 
+}
+
+.ui-menu
+{
+    width: 170px;
+    float: left;
+}

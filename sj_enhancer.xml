@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension version="2.5" type="plugin" group="editors-xtd" method="upgrade">
+    <name>plg_editors-xtd_sj_enhancer</name>
+    <description>PLG_SJ_ENHANCER_XML_DESCRIPTION</description>
+    <author>Umutcan Simsek</author>
+    <authorEmail>umutcan.simsek@mni.thm.de</authorEmail>
+    <authorUrl>www.mni.thm.de</authorUrl>
+    <creationDate>June 2015</creationDate>
+    <copyright>2015 TH Mittelhessen</copyright>
+    <license>GNU GPL v.2</license>
+    <version>1.0.0</version>
+    <files>
+        <filename plugin="sj_enhancer">sj_enhancer.php</filename>
+        <filename>view.php</filename>
+        <filename>model.php</filename>
+        <filename>index.html</filename>
+        <folder>assets</folder>
+        <folder>language</folder>
+        <folder>stanbolenhancer</folder>
+    </files>
+    <languages  folder="language">
+        <language tag="en-GB">en-GB/en-GB.plg_editors-xtd_sj_enhancer.ini</language>
+        <language tag="en-GB">en-GB/en-GB.plg_editors-xtd_sj_enhancer.sys.ini</language>
+    </languages>
+    <config>
+        <fields name="params">
+        <fieldset name="basic">
+            <field name="txtEnhancerSite" type="text" size="30" default="SJ" label="SJ_ENHANCER_SITE_ADDRESS" description="SJ_ENHANCER_SITE_DESC" />
+        </fieldset>
+        </fields>
+    </config>
+</extension>
