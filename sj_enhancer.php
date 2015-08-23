@@ -77,7 +77,8 @@ class plgButtonSJ_Enhancer extends JPlugin
 
         $postContent = '
         function enhance(x){
-        var postData="stanbol='.$this->params->get('txtEnhancerSite').'&contentText="+x;
+        var y = encodeURIComponent(x);
+        var postData="stanbol='.$this->params->get('txtEnhancerSite').'&contentText="+y;
         $.ajax({
         data:postData,
         url:"'.$link.'",
@@ -99,7 +100,7 @@ class plgButtonSJ_Enhancer extends JPlugin
         $button->set('text', JText::_('PLG_SJ_ENHANCER_BUTTON_LABEL'));
         $button->set('name', 'btnSemantify');
         $button->set('options', "{handler: 'iframe', size: {x: 770, y: 400}}");
-        $button->set('onclick','enhance(getEditorText());');
+        $button->set('onclick',"enhance(WFEditor.getContent('jform_articletext'));");
         $button->set('link',$link);
 
 

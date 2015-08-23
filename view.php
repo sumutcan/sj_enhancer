@@ -22,7 +22,7 @@ $contentText = JRequest::getString("contentText");
 $rootURI = str_replace('plugins/editors-xtd/sj_enhancer/', '', JURI::root());
 
 $session = JFactory::getSession();
-$enhancements = "There is no enhancement";
+$enhancements = array();
 
 $engine = new StanbolEngine("admin","admin");
 $module = new StanbolEnhancer();
@@ -115,9 +115,7 @@ if ($session->get("enhancements",null,"sj") != null)
                     <?php $selectedText = ""; $ranges=""; foreach ($enh->getTextAnnotations() as $textAnno) {$selectedText .= $textAnno->getSelectedText(); $ranges .= $textAnno->getStart().",".$textAnno->getEnd().";";} ?>
                     <tr class = <?php echo "row".$i%2; ?>>
                     <td>
-                        <input type="checkbox" id=<?php echo "cb".$i; ?> value="<?php echo $enh->getId(); ?>"/>
-
-                        <input type="hidden" id="<?php echo "range".$i; ?>" value="<?php echo $ranges  ?>" />
+                        <input type="checkbox" id=<?php echo "cb".$i; ?> value="<?php echo $enh->getEntityID() ."-".$ranges."-".$selectedText; ?>"/>
                     </td>
 
                         <td><?php  echo $selectedText ?></td>

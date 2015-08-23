@@ -90,6 +90,9 @@ class EntityAnnotation extends \siwcms\Enhancement {
         $this->_textAnnotations = $textAnnotations;
     }
 
-
+    public function getEntityID()
+    {
+        return $this->_entityRef->localName();
+    }
 
 }

@@ -243,15 +243,30 @@ function insertSubjects() {
     "use strict";
 
     var subjects = '',
-        link = 'index.php?option=com_thm_organizer&view=subject_details&languageTag=';
+        link = 'index.php?option=com_thm_groups&view=profile&layout=default&';
+    var content;
+    var editorArea = $('#jform_articletext', window.parent.document)[0];
+    content = editorArea.value;
     $.each($('#selectable input'), function (key, value) {
         var subjectLink, checked = value.checked, subjectID = value.value, subject = $('#subject' + key).text();
 
-        subjectLink = link + languageTag + '&id=' + subjectID;
         if (checked) {
-            subjects += '<a target="_blank" href="' + subjectLink + '">' + subject + '</a><br />';
+
+            var chkArray = value.value.split('-');
+            var entityID = chkArray[0];
+            var ranges = chkArray[1].split(';');
+            var selectedText = chkArray[2];
+            var start = ranges[0].split(',')[0];
+            var end = ranges[0].split(',')[1];
+
+            subjectLink = link + 'gsuid=' + entityID;
+
+            content = content.replace(selectedText, '<a target="_blank" href="' + subjectLink + '">' + selectedText + '</a>');
+
         }
     });
-    window.parent.jInsertEditorText(subjects, editor);
+    window.parent.WFEditor.setContent(editor,content);
     window.parent.SqueezeBox.close();
+
 }
+

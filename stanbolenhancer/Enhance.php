@@ -29,19 +29,20 @@ class Enhance extends Operation {
     }
 
 
-    public function getResult()
+    public function processResult()
     {
-        echo var_dump($this->_result);
-        $graph = new EasyRdf_Graph($this->_graphURI,$this->_result);
+        $graph = new EasyRdf_Graph($this->_graphURI,$this->getResult());
         $this->loadEnhancements($graph);
         return $this->_enhancements;
     }
 
-    public function run($url, $data, array $options = null, $auth=null, $apiKey=null)
+    /**
+     *Set if there is any configuration or saving needs to be done before operation runs
+     */
+    protected function preRun()
     {
-        parent::sendRequest($url,$data,$options);
+        parent::addCustomHeader("asd","asd");
     }
-
 
     /**
      * Processes the enhancements are loads them into an array.
