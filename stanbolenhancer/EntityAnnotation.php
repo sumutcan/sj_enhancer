@@ -6,14 +6,27 @@
  * Time: 12:21 AM
  */
 
+use siwcms\Entity;
+
 jimport("lib_sj.siwcms.SIWCMS");
 
 class EntityAnnotation extends \siwcms\Enhancement {
 
-    private $_entityRef;
+    private $_entity;
     private $_textAnnotations;
     private $_entityLabel;
     private $_entityTypes = array();
+
+
+    /**
+     * @param Entity $entity The entity to which the annotation is related.
+     */
+    public function __construct(Entity $entity)
+    {
+
+        $this->_entity = $entity;
+    }
+
 
     /**
      * @param bool $localname
@@ -61,21 +74,22 @@ class EntityAnnotation extends \siwcms\Enhancement {
     /**
      * @return mixed
      */
-    public function getEntityRef()
+    public function getEntity()
     {
-        return $this->_entityRef;
+        return $this->_entity;
     }
 
     /**
-     * @param mixed $entityRef
+     * @param EasyRDF_Resource $entity
      */
-    public function setEntityRef($entityRef)
+    public function setEntity($entity)
     {
-        $this->_entityRef = $entityRef;
+
+        $this->_entity = $entity;
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getTextAnnotations()
     {
@@ -83,16 +97,13 @@ class EntityAnnotation extends \siwcms\Enhancement {
     }
 
     /**
-     * @param mixed $textAnnotations
+     * @param array $textAnnotations
      */
     public function setTextAnnotations(array $textAnnotations)
     {
         $this->_textAnnotations = $textAnnotations;
     }
 
-    public function getEntityID()
-    {
-        return $this->_entityRef->localName();
-    }
+
 
 }

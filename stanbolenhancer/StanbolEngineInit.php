@@ -11,6 +11,7 @@ require_once "TextAnnotation.php";
 require_once "StanbolEngine.php";
 require_once "StanbolEnhancer.php";
 require_once "Enhance.php";
+require_once "Person.php";
 
 /*class StanbolEngineInit {
 

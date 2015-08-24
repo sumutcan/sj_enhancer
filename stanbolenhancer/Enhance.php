@@ -1,4 +1,5 @@
 <?php
+use siwcms\Entity;
 use siwcms\Operation;
 jimport("lib_sj.siwcms.SIWCMS");
 /**
@@ -41,7 +42,7 @@ class Enhance extends Operation {
      */
     protected function preRun()
     {
-        parent::addCustomHeader("asd","asd");
+
     }
 
     /**
@@ -52,16 +53,19 @@ class Enhance extends Operation {
     private function loadEnhancements($graph)
     {
         EasyRdf_Namespace::set("stanbol","http://fise.iks-project.eu/ontology/");
+        Entity::mapType("foaf:Person","Person");
+
         $textAnnotations = $graph->allOfType("http://fise.iks-project.eu/ontology/TextAnnotation");
         $entityAnnotations = $graph->allOfType("http://fise.iks-project.eu/ontology/EntityAnnotation");
 
+
         foreach ($entityAnnotations as $anno)
         {
-            $entityAnnotation = new EntityAnnotation();
-            $entityAnnotation->setId($anno->getUri());
 
+            $entityAnnotation = new EntityAnnotation(Entity::create($anno));
+            $entityAnnotation->setId($anno->getUri());
             $entityAnnotation->setTextAnnotations($this->createTextAnnotations($anno->allResources("dc:relation")));
-            $entityAnnotation->setEntityRef($anno->get("stanbol:entity-reference"));
+           // $entityAnnotation->setEntity();
             $entityAnnotation->setConfidence($anno->getLiteral("stanbol:confidence")->getValue());
             $entityAnnotation->setEntityLabel($anno->getLiteral("stanbol:entity-label")->getValue());
             $entityAnnotation->setEntityTypes($anno->allResources("stanbol:entity-type"));

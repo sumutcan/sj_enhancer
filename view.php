@@ -98,10 +98,13 @@ if ($session->get("enhancements",null,"sj") != null)
                         Selected Text
                     </th>
                     <th width="15%">
-                        Entity Label
+                        Annotation Label
                     </th>
                     <th width="15%">
                         Entity
+                    </th>
+                    <th width="15%">
+                        Entity Label(s)
                     </th>
                     <th width="5%">
                         Entity Type(s)
@@ -115,12 +118,13 @@ if ($session->get("enhancements",null,"sj") != null)
                     <?php $selectedText = ""; $ranges=""; foreach ($enh->getTextAnnotations() as $textAnno) {$selectedText .= $textAnno->getSelectedText(); $ranges .= $textAnno->getStart().",".$textAnno->getEnd().";";} ?>
                     <tr class = <?php echo "row".$i%2; ?>>
                     <td>
-                        <input type="checkbox" id=<?php echo "cb".$i; ?> value="<?php echo $enh->getEntityID() ."-".$ranges."-".$selectedText; ?>"/>
+                        <input type="checkbox" id=<?php echo "cb".$i; ?> value="<?php echo $enh->getEntity()->getId() ."-".$ranges."-".$selectedText; ?>"/>
                     </td>
 
                         <td><?php  echo $selectedText ?></td>
                         <td><?php  echo $enh->getEntityLabel() ?></td>
-                        <td><?php  echo $enh->getEntityRef() ?></td>
+                        <td><?php  echo $enh->getEntity()->getId(); ?></td>
+                        <td><?php  echo $enh->getEntity()->getLabelsAsString(); ?></td>
                         <td><?php  echo implode($enh->getEntityTypes(true),", ") ?></td>
                     </tr>
                     <?php $i++; ?>
