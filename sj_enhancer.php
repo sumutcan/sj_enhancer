@@ -1,13 +1,14 @@
 <?php
 /**
- * @category    Joomla plugin
- * @package     SJ
- * @subpackage  plg_sj_enhancer_editor_xtd_subjects.site
- * @name        plgButtonSJ_Enhancer_Editors_XTD
- * @author      Umutcan Simsek, <umutcan.simsek@mni.thm.de>
- * @copyright   2015 TH Mittelhessen
- * @license     GNU GPL v.2
- * @link        www.mni.thm.de
+ * Semantic Joomla! Enhancer Plugin
+ *
+ * @category  Joomla_Plugin
+ * @package   SJ
+ * @name      plgButtonSJ_Enhancer_Editors_XTD
+ * @author    Umutcan Simsek, <umutcan.simsek@mni.thm.de>
+ * @copyright 2015 TH Mittelhessen
+ * @license   GNU GPL v.2
+ * @link      www.mni.thm.de
  */
 defined('_JEXEC') or die;
 jimport('joomla.plugin.plugin');
@@ -15,20 +16,22 @@ jimport('joomla.event.plugin');
 jimport('joomla.language.language');
 
 /**
- * Class adds a button for the insertion of THM Organizer resources in editor
+ * Class adds a button for the insertion of SJ enhancements into editor
  * fields.
  *
- * @category    Joomla.Plugin.Editors
- * @package     thm_organizer
- * @subpackage  plg_thm_organizer_editors_xtd_subjects.site
+ * @category Joomla.Plugin.Editors
+ * @package  Thm_Organizer
+ * @author   Umutcan Simsek, <umutcan.simsek@mni.thm.de>
+ * @license  GNU GPL v.2
+ * @link     www.mni.thm.de
  */
 class plgButtonSJ_Enhancer extends JPlugin
 {
     /**
      * Constructor
-     *
-     * @param   object  &$subject  The object to observe
-     * @param   array   $config    An array that holds the plugin configuration
+
+     * @param object $subject The object to observe
+     * @param array  $config  An array that holds the plugin configuration
      */
     public function __construct(&$subject, $config)
     {
@@ -40,9 +43,9 @@ class plgButtonSJ_Enhancer extends JPlugin
      * Creates a button for the insertion of THM Organizer resources in editor
      * fields.
      *
-     * @param   string  $name  the name of the editor
+     * @param string $name the name of the editor
      *
-     * @return  Jobject  the object modeling the button
+     * @return Jobject the object modeling the button
      */
     public function onDisplay($name)
     {
@@ -56,9 +59,6 @@ class plgButtonSJ_Enhancer extends JPlugin
 
 
 
-
-
-//here starts the view stuff
         $baseFileURL = JURI::root() . '/plugins/editors-xtd/sj_enhancer/';
 
         JFactory::getDocument()->addStyleSheet($baseFileURL . 'assets/subjects.css');
@@ -78,7 +78,8 @@ class plgButtonSJ_Enhancer extends JPlugin
         $postContent = '
         function enhance(x){
         var y = encodeURIComponent(x);
-        var postData="stanbol='.$this->params->get('txtEnhancerSite').'&contentText="+y;
+        var postData="stanbol='.
+            $this->params->get('txtEnhancerSite').'&contentText="+y;
         $.ajax({
         data:postData,
         url:"'.$link.'",
@@ -100,10 +101,14 @@ class plgButtonSJ_Enhancer extends JPlugin
         $button->set('text', JText::_('PLG_SJ_ENHANCER_BUTTON_LABEL'));
         $button->set('name', 'btnSemantify');
         $button->set('options', "{handler: 'iframe', size: {x: 770, y: 400}}");
-        $button->set('onclick',"enhance(WFEditor.getContent('jform_articletext'));");
-        $button->set('link',$link);
+        $button->set(
+            'onclick', "enhance(WFEditor.getContent('jform_articletext'));"
+        );
+        $button->set('link', $link);
 
 
         return $button;
     }
+
+
 }

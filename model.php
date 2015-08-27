@@ -1,8 +1,7 @@
 <?php
 /**
- * @category    Joomla plugin
+ * @category    Joomla_Plugin
  * @package     THM_Organizer
- * @subpackage  plg_thm_organizer_editor_xtd_subjects.site
  * @name        model.php
  * @author      Samuel Huebl, <samuel.huebl@mni.thm.de>
  * @author      James Antrim, <james.antrim@mni.thm.de>
@@ -10,6 +9,8 @@
  * @license     GNU GPL v.2
  * @link        www.mni.thm.de
  */
+use siwcms\SemanticEngine;
+
 define('_JEXEC', 1);
 define('JPATH_BASE', dirname(dirname(dirname(dirname(__FILE__)))));
 define('DS', DIRECTORY_SEPARATOR);
@@ -26,16 +27,23 @@ jimport("lib_sj.siwcms.SIWCMS");
 /**
  * Class Model for subjects editor extension plugin
  *
- * @category    Joomla.Plugin.Editors-XTD
- * @package     thm_organizer
- * @subpackage  plg_thm_organizer_editor_xtd_subjects.site
+ * @category Joomla.Plugin.Editors-XTD
+ * @package  SJ
+ * @author   James Antrim, <james.antrim@mni.thm.de>
+ * @license  GNU GPL v.2
+ * @link     www.mni.thm.de
  */
 class SJModel
 {
-    private $_enhancements = array();
     private $_semanticEngine;
 
-    public function __construct(siwcms\SemanticEngine $engine)
+    /**
+     * Constructor
+     *
+     * @param SemanticEngine $engine The semantic engine object
+     * that is used to interact with semantic backend
+     */
+    public function __construct(SemanticEngine $engine)
     {
         $this->_semanticEngine = $engine;
     }
@@ -44,7 +52,7 @@ class SJModel
      * Loads the forwarded language into the joomla context, and loads the
      * appropriate plugin language file.
      *
-     * @return  void
+     * @return string
      */
     public static function initializeLanguage()
     {
@@ -57,35 +65,17 @@ class SJModel
     }
 
 
-
+    /**
+     * Function that enhances the text
+     * @param string $text Text to be enhanced
+     * @return array enhancements array
+     */
     public function enhance($text)
     {
-       return  $this->_semanticEngine->runModule("enhancer","enhance",$text);
+        $enhancement=$this->_semanticEngine->runModule("enhancer", "enhance", $text);
+
+        return $enhancement;
 
     }
-
-
-
-    /**
-     * @return mixed
-     */
-    public function getEnhancements()
-    {
-        return $this->_enhancements;
-    }
-
-    /**
-     * @param mixed $enhancements
-     */
-    public function setEnhancements(array $enhancements)
-    {
-        $this->_enhancements = $enhancements;
-    }
-
-
-
-
-
-
 
 }

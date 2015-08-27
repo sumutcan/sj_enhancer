@@ -1,14 +1,14 @@
 <?php
 /**
- * @category    Joomla plugin
- * @package     THM_Organizer
- * @subpackage  plg_thm_organizer_editor_xtd_subjects.site
- * @name        view.php
- * @author      Samuel Huebl, <samuel.huebl@mni.thm.de>
- * @author      James Antrim, <james.antrim@mni.thm.de>
- * @copyright   2013 TH Mittelhessen
- * @license     GNU GPL v.2
- * @link        www.mni.thm.de
+ * Semantic Joomla! Enhancer Plugin
+ *
+ * @category  Joomla_Plugin
+ * @package   SJ
+ * @name      view.php
+ * @author    Umutcan Simsek, <umutcan.simsek@mni.thm.de>
+ * @copyright 2015 TH Mittelhessen
+ * @license   GNU GPL v.2
+ * @link      www.mni.thm.de
  */
 require_once './model.php';
 require_once 'stanbolenhancer/StanbolEngineInit.php';
@@ -24,13 +24,16 @@ $rootURI = str_replace('plugins/editors-xtd/sj_enhancer/', '', JURI::root());
 $session = JFactory::getSession();
 $enhancements = array();
 
-$engine = new StanbolEngine("admin","admin");
+$engine = new StanbolEngine("admin", "admin");
 $module = new StanbolEnhancer();
 $module->setUrl($enhancerURL);
-$operation = new Enhance(POST,array("Content-Type" => "text/plain", "Accept" => "application/rdf+xml"));
+$operation = new Enhance(
+    POST,
+    array("Content-Type" => "text/plain", "Accept" => "application/rdf+xml")
+);
 $operation->setGraphURI($rootURI);
-$module->registerOperation("enhance",$operation);
-$engine->registerModule("enhancer",$module);
+$module->registerOperation("enhance", $operation);
+$engine->registerModule("enhancer", $module);
 $model = new SJModel($engine);
 
 
@@ -38,12 +41,11 @@ $model = new SJModel($engine);
 if ($enhancerURL && $contentText) {
     $enhancements = $model->enhance($contentText);
 
-    $session->set("enhancements", $enhancements,"sj");
+    $session->set("enhancements", $enhancements, "sj");
 
 }
-if ($session->get("enhancements",null,"sj") != null)
-{
-    $enhancements = $session->get("enhancements",null,"sj");
+if ($session->get("enhancements", null, "sj") != null) {
+    $enhancements = $session->get("enhancements", null, "sj");
 }
 
 
@@ -71,7 +73,7 @@ if ($session->get("enhancements",null,"sj") != null)
             <div class="toolbar-list" id="toolbar">
                 <ul>
                     <li class="button" id="toolbar-insert">
-                        <a href="#" onclick="insertSubjects(); return false;" class="toolbar">
+                        <a href="#" onclick="insertEnhancements(); return false;" class="toolbar">
                             <span class="icon-32-insert"></span>
                             <?php echo JText::_('PLG_SJ_ENHANCER_INSERT'); ?>
                         </a>
@@ -113,19 +115,28 @@ if ($session->get("enhancements",null,"sj") != null)
                 </thead>
 
                 <tbody id="selectable">
-                <? $i = 0 ?>
+                <?php $i = 0 ?>
                 <?php foreach ($enhancements as $enh) :?>
-                    <?php $selectedText = ""; $ranges=""; foreach ($enh->getTextAnnotations() as $textAnno) {$selectedText .= $textAnno->getSelectedText(); $ranges .= $textAnno->getStart().",".$textAnno->getEnd().";";} ?>
+                    <?php $selectedText = ""; $ranges="";
+                    foreach ($enh->getTextAnnotations() as $textAnno) {
+                        $selectedText .= $textAnno->getSelectedText();
+                        $ranges .= $textAnno->getStart()
+                            .",".$textAnno->getEnd().
+                            ";";
+                    } ?>
                     <tr class = <?php echo "row".$i%2; ?>>
                     <td>
-                        <input type="checkbox" id=<?php echo "cb".$i; ?> value="<?php echo $enh->getEntity()->getId() ."-".$ranges."-".$selectedText; ?>"/>
+                        <input type="checkbox" id=<?php echo "cb".$i; ?>
+                        value="<?php echo $enh->getEntity()->getEntityID()
+                            ."-".$ranges."-".$selectedText; ?>"/>
                     </td>
 
                         <td><?php  echo $selectedText ?></td>
                         <td><?php  echo $enh->getEntityLabel() ?></td>
                         <td><?php  echo $enh->getEntity()->getId(); ?></td>
-                        <td><?php  echo $enh->getEntity()->getLabelsAsString(); ?></td>
-                        <td><?php  echo implode($enh->getEntityTypes(true),", ") ?></td>
+                        <td><?php  echo $enh->getEntity()->getLabelsAsString();
+                            ?></td>
+                        <td><?php  echo implode($enh->getEntityTypes(true), ", ") ?></td>
                     </tr>
                     <?php $i++; ?>
                 <?php endforeach ;?>

@@ -1,12 +1,27 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: umutcan
- * Date: 8/19/15
- * Time: 12:15 AM
+ * Semantic Joomla! Enhancer Plugin
+ *
+ * @category  Joomla_Plugin
+ * @package   SJ
+ * @name      plgButtonSJ_Enhancer_Editors_XTD
+ * @author    Umutcan Simsek, <umutcan.simsek@mni.thm.de>
+ * @copyright 2015 TH Mittelhessen
+ * @license   GNU GPL v.2
+ * @link      www.mni.thm.de
  */
-
-class TextAnnotation extends siwcms\Enhancement {
+use siwcms\Enhancement;
+/**
+ * The class that extends SIWCMS Enhancement class stores stanbol text annotations
+ *
+ * @category Joomla.Plugin.Editors
+ * @package  Thm_Organizer
+ * @author   Umutcan Simsek, <umutcan.simsek@mni.thm.de>
+ * @license  GNU GPL v.2
+ * @link     www.mni.thm.de
+ */
+class TextAnnotation extends Enhancement
+{
 
     private $_selectedText;
 

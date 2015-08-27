@@ -1,16 +1,31 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: umutcan
- * Date: 8/19/15
- * Time: 12:21 AM
+ * Semantic Joomla! Enhancer Plugin
+ *
+ * @category  Joomla_Plugin
+ * @package   SJ
+ * @name      plgButtonSJ_Enhancer_Editors_XTD
+ * @author    Umutcan Simsek, <umutcan.simsek@mni.thm.de>
+ * @copyright 2015 TH Mittelhessen
+ * @license   GNU GPL v.2
+ * @link      www.mni.thm.de
  */
 
 use siwcms\Entity;
 
 jimport("lib_sj.siwcms.SIWCMS");
 
-class EntityAnnotation extends \siwcms\Enhancement {
+/**
+ * The class that extends SIWCMS Enhancement class stores stanbol entity annotations
+ *
+ * @category Joomla.Plugin.Editors
+ * @package  Thm_Organizer
+ * @author   Umutcan Simsek, <umutcan.simsek@mni.thm.de>
+ * @license  GNU GPL v.2
+ * @link     www.mni.thm.de
+ */
+class EntityAnnotation extends \siwcms\Enhancement
+{
 
     private $_entity;
     private $_textAnnotations;
@@ -19,6 +34,7 @@ class EntityAnnotation extends \siwcms\Enhancement {
 
 
     /**
+     * Constructor
      * @param Entity $entity The entity to which the annotation is related.
      */
     public function __construct(Entity $entity)
@@ -29,16 +45,17 @@ class EntityAnnotation extends \siwcms\Enhancement {
 
 
     /**
-     * @param bool $localname
+     * Returns the types of the entity
+     * @param bool $localname boolean flag
+     * that determines whether full uri will be returned
      * @return array
      */
     public function getEntityTypes($localname=false)
     {
-        if ($localname)
-        {
+        if ($localname) {
             $localNames = array();
-            foreach ($this->_entityTypes as $type){
-                array_push($localNames,$type->localName());
+            foreach ($this->_entityTypes as $type) {
+                array_push($localNames, $type->localName());
             }
 
             return $localNames;
@@ -48,7 +65,11 @@ class EntityAnnotation extends \siwcms\Enhancement {
     }
 
     /**
-     * @param array $entityTypes
+     * Setter
+     *
+     * @param array $entityTypes types of entities
+     *
+     * @return void
      */
     public function setEntityTypes($entityTypes)
     {
@@ -56,6 +77,8 @@ class EntityAnnotation extends \siwcms\Enhancement {
     }
 
     /**
+     * Getter
+     *
      * @return mixed
      */
     public function getEntityLabel()
@@ -64,7 +87,11 @@ class EntityAnnotation extends \siwcms\Enhancement {
     }
 
     /**
-     * @param mixed $entityLabel
+     * Setter
+     *
+     * @param string $entityLabel label of the entity
+     *
+     * @return void
      */
     public function setEntityLabel($entityLabel)
     {
@@ -72,7 +99,9 @@ class EntityAnnotation extends \siwcms\Enhancement {
     }
 
     /**
-     * @return mixed
+     * Getter
+     *
+     * @return Entity
      */
     public function getEntity()
     {
@@ -80,7 +109,11 @@ class EntityAnnotation extends \siwcms\Enhancement {
     }
 
     /**
-     * @param EasyRDF_Resource $entity
+     * Setter
+     *
+     * @param Entity $entity the entity that is related to annotation
+     *
+     * @return void
      */
     public function setEntity($entity)
     {
@@ -89,6 +122,8 @@ class EntityAnnotation extends \siwcms\Enhancement {
     }
 
     /**
+     * Getter
+     *
      * @return array
      */
     public function getTextAnnotations()
@@ -97,7 +132,12 @@ class EntityAnnotation extends \siwcms\Enhancement {
     }
 
     /**
-     * @param array $textAnnotations
+     * Setter
+     *
+     * @param array $textAnnotations Occurences of the entity
+     * in the content (text annotations)
+     *
+     * @return void
      */
     public function setTextAnnotations(array $textAnnotations)
     {

@@ -6,6 +6,7 @@
  * Time: 12:58 PM
  */
 use \siwcms\SemanticEngine;
+use siwcms\SemanticEngineModule;
 
 require_once "StanbolEngineOptions.php";
 
@@ -16,35 +17,43 @@ require_once "StanbolEngineOptions.php";
 class StanbolEngine extends SemanticEngine {
 
     /**
-     * @param null $username
-     * @param null $password
+     * Cosntructor
+     *
+     * @param null $username Username for RESTful authentication
+     * @param null $password Password for RESTful authentication
      */
     public function __construct($username=null,$password=null)
     {
         $options = new StanbolEngineOptions();
-        $options->setAuth($username,$password);
+        $options->setAuth($username, $password);
 
         parent::__construct($options);
 
     }
 
     /**
-     * @param $moduleName
-     * @param \siwcms\SemanticEngineModule $module
-     * @return mixed|void
+     * The method that registers a module to the engine
+     *
+     * @param string               $moduleName Name of the module
+     * @param SemanticEngineModule $module     Module to be registered to engine
+     *
+     * @return void
      */
-    public function registerModule($moduleName,  \siwcms\SemanticEngineModule $module)
+    public function registerModule($moduleName,  SemanticEngineModule $module)
     {
-        parent::registerModule($moduleName,$module);
+        parent::registerModule($moduleName, $module);
     }
 
     /**
-     * @param $text
-     * @return mixed
+     * Method that runs the relavent module
+     *
+     * @param string $text String to be enhanced
+     *
+     * @return array Enhancements in an array
      */
     public function enhance($text)
     {
-        return parent::runModule("enhancer","enhance",$text);
+        return parent::runModule("enhancer", "enhance", $text);
 
 
     }

@@ -1,5 +1,15 @@
 <?php
-
+/**
+ * Semantic Joomla! Enhancer Plugin
+ *
+ * @category  Joomla_Plugin
+ * @package   SJ
+ * @name      plgButtonSJ_Enhancer_Editors_XTD
+ * @author    Umutcan Simsek, <umutcan.simsek@mni.thm.de>
+ * @copyright 2015 TH Mittelhessen
+ * @license   GNU GPL v.2
+ * @link      www.mni.thm.de
+ */
 use siwcms\Entity;
 
 /**
@@ -9,7 +19,8 @@ use siwcms\Entity;
  * Time: 1:16 AM
  */
 
-class Person extends Entity {
+class Person extends Entity
+{
 
     /**
      * @param $uri

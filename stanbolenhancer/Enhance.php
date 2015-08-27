@@ -1,20 +1,41 @@
 <?php
+
+/**
+ * Semantic Joomla! Enhancer Plugin
+ *
+ * @category  Joomla_Plugin
+ * @package   SJ
+ * @name      plgButtonSJ_Enhancer_Editors_XTD
+ * @author    Umutcan Simsek, <umutcan.simsek@mni.thm.de>
+ * @copyright 2015 TH Mittelhessen
+ * @license   GNU GPL v.2
+ * @link      www.mni.thm.de
+ */
+
+
 use siwcms\Entity;
 use siwcms\Operation;
 jimport("lib_sj.siwcms.SIWCMS");
-/**
- * Created by PhpStorm.
- * User: umutcan
- * Date: 8/21/15
- * Time: 1:44 PM
- */
 
-class Enhance extends Operation {
+
+/**
+ * The class that extends SIWCMS Operation class and
+ * manipulates the results coming from semantic engine
+ *
+ * @category Joomla.Plugin.Editors
+ * @package  Thm_Organizer
+ * @author   Umutcan Simsek, <umutcan.simsek@mni.thm.de>
+ * @license  GNU GPL v.2
+ * @link     www.mni.thm.de
+ */
+class Enhance extends Operation
+{
 
     private  $_graphURI;
     private  $_enhancements = array();
     /**
-     * @return mixed
+     * Getter graph uri
+     * @return string
      */
     public function getGraphURI()
     {
@@ -22,7 +43,9 @@ class Enhance extends Operation {
     }
 
     /**
-     * @param mixed $graphURI
+     * Setter graph uri
+     * @param mixed $graphURI uri of the graph
+     * @return void
      */
     public function setGraphURI($graphURI)
     {
@@ -30,15 +53,24 @@ class Enhance extends Operation {
     }
 
 
+    /**
+     * Overrides abstract processResult method in SIWCMS Operation class.
+     * Loads the raw HTTP response coming from semantic engine to an RDF graph and
+     * then stores it in an array
+     *
+     * @return array
+     */
     public function processResult()
     {
-        $graph = new EasyRdf_Graph($this->_graphURI,$this->getResult());
-        $this->loadEnhancements($graph);
+        $graph = new EasyRdf_Graph($this->_graphURI, $this->getResult());
+        $this->_loadEnhancements($graph);
         return $this->_enhancements;
     }
 
     /**
-     *Set if there is any configuration or saving needs to be done before operation runs
+     * Set if there is any configuration or saving
+     * needs to be done before operation runs
+     * @return void
      */
     protected function preRun()
     {
@@ -46,34 +78,49 @@ class Enhance extends Operation {
     }
 
     /**
-     * Processes the enhancements are loads them into an array.
+     * Processes the enhancements and loads them into an array.
      *
-     * @param $graph
+     * @param EasyRDF_Graph $graph RDF graph that holds the enhancements
+     *
+     * @return void
      */
-    private function loadEnhancements($graph)
+    private function _loadEnhancements($graph)
     {
-        EasyRdf_Namespace::set("stanbol","http://fise.iks-project.eu/ontology/");
-        Entity::mapType("foaf:Person","Person");
+        EasyRdf_Namespace::set("stanbol", "http://fise.iks-project.eu/ontology/");
+        Entity::mapType("foaf:Person", "Person");
 
-        $textAnnotations = $graph->allOfType("http://fise.iks-project.eu/ontology/TextAnnotation");
-        $entityAnnotations = $graph->allOfType("http://fise.iks-project.eu/ontology/EntityAnnotation");
+        $entityAnnotations = $graph
+            ->allOfType("http://fise.iks-project.eu/ontology/EntityAnnotation");
 
 
-        foreach ($entityAnnotations as $anno)
-        {
+        foreach ($entityAnnotations as $anno) {
 
             $entityAnnotation = new EntityAnnotation(Entity::create($anno));
             $entityAnnotation->setId($anno->getUri());
-            $entityAnnotation->setTextAnnotations($this->createTextAnnotations($anno->allResources("dc:relation")));
-           // $entityAnnotation->setEntity();
-            $entityAnnotation->setConfidence($anno->getLiteral("stanbol:confidence")->getValue());
-            $entityAnnotation->setEntityLabel($anno->getLiteral("stanbol:entity-label")->getValue());
-            $entityAnnotation->setEntityTypes($anno->allResources("stanbol:entity-type"));
-            array_push($this->_enhancements,$entityAnnotation);
+            $entityAnnotation->setTextAnnotations(
+                $this->_createTextAnnotations(
+                    $anno->allResources("dc:relation")
+                )
+            );
+            $entityAnnotation->setConfidence(
+                $anno->getLiteral("stanbol:confidence")->getValue()
+            );
+            $entityAnnotation->setEntityLabel(
+                $anno->getLiteral("stanbol:entity-label")->getValue()
+            );
+            $entityAnnotation->setEntityTypes(
+                $anno->allResources("stanbol:entity-type")
+            );
+            array_push($this->_enhancements, $entityAnnotation);
         }
     }
 
-    private function createTextAnnotations(array $resources)
+    /**
+     * Create text annotations
+     * @param array $resources A collection of TextAnnotation RDF triples
+     * @return array
+     */
+    private function _createTextAnnotations(array $resources)
     {
         $textAnnotations = array();
         foreach ($resources as $res) {
