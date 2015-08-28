@@ -11,7 +11,7 @@
  * @link      www.mni.thm.de
  */
 require_once './model.php';
-require_once 'stanbolenhancer/StanbolEngineInit.php';
+jimport("lib_sj_engines.stanbolenhancer.StanbolEngineInit");
 
 $mainframe = JFactory::getApplication('site');
 $mainframe->initialise();
