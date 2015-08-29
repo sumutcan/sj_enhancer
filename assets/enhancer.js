@@ -35,10 +35,14 @@ function insertEnhancements() {
             entities.push(entityID);
         }
     });
-    var postData = JSON.stringify(entities);
-    $.ajax({
+    var postData =  entities.join(",");
+   // window.parent.location.hash = window.parent.location.href.replace(/#entities=([^&]$|[^&]*)/i, "");
+    setCookie("entities",postData,1);
+    window.parent.WFEditor.setContent(editor,content);
+    window.parent.SqueezeBox.close();
+/*    $.ajax({
         data:{entities: postData},
-        url:"manage_session.php",
+        url:"",
         type: "POST",
         success:function(result){
 
@@ -50,9 +54,14 @@ function insertEnhancements() {
         {
             alert(error);
         }
-    });
+    });*/
 
 
-    return false;
+}
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires +"; path=/";
 }
 

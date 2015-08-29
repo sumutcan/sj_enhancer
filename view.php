@@ -24,6 +24,8 @@ $rootURI = str_replace('plugins/editors-xtd/sj_enhancer/', '', JURI::root());
 $session = JFactory::getSession();
 $enhancements = array();
 
+
+
 $engine = new StanbolEngine("admin", "admin");
 $module = new StanbolEnhancer();
 $module->setUrl($enhancerURL);
